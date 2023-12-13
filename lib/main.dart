@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutterViper/utils/shared_preference.dart';
 import 'package:flutterViper/view/landing_page.dart';
 import 'package:flutterViper/view/my_page.dart';
 import 'package:flutterViper/view/sign_in_page.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
    WidgetsFlutterBinding.ensureInitialized();
@@ -54,6 +55,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       home: isLoggedIn ? const MyPage() : const LandingPage(),
+      navigatorKey: navigatorKey,
       routes: {
         '/landing': (BuildContext context) => const LandingPage(),
         '/sign_in': (BuildContext context) => const SignInPage(),

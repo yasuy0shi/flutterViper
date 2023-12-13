@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutterViper/presenters/authentication/authentication_presenter.dart';
-import 'package:flutterViper/view/my_page.dart';
 
 class SignInPage extends ConsumerStatefulWidget {
   const SignInPage({super.key});
@@ -27,20 +26,8 @@ class SignInPageState extends ConsumerState<SignInPage> {
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(AuthenticationPresenterProvider.presenter);
     final authenticationPresenter =
         ref.read(AuthenticationPresenterProvider.presenter.notifier);
-
-    if (state.isSignedIn) {
-      Future.delayed(const Duration(milliseconds: 200)).then((e) {
-        authenticationPresenter.retrieve();
-        Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(
-              builder: (context) => const MyPage(),
-            ),
-            (_) => false);
-      });
-    }
 
     return Scaffold(
       key: _scaffoldKey,

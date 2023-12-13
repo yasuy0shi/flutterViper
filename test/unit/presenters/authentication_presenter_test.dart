@@ -13,6 +13,7 @@ import '../../mock/interactors/authentication/sign_in_fail_interactor.dart';
 import '../../mock/interactors/authentication/sign_in_success_interactor.dart';
 import '../../mock/interactors/authentication/sign_out_fail_interactor.dart';
 import '../../mock/interactors/authentication/sign_out_success_interactor.dart';
+import '../../mock/router/dummy_router.dart';
 
 main() {
   group('Unit: 認証Presenter', () {
@@ -22,8 +23,9 @@ main() {
       test('サインインに成功する', () async {
         InteractorBus bus = InteractorBus()
           ..register<SignInRequest>(SignInSuccessInteractor());
+        DummyRouter router = DummyRouter();
 
-        authenticationPresenter = AuthenticationPresenter(bus);
+        authenticationPresenter = AuthenticationPresenter(bus, router);
 
         await authenticationPresenter.signIn(
           'valid@email.com',
@@ -39,8 +41,9 @@ main() {
       test('サインインに失敗する', () async {
         InteractorBus bus = InteractorBus()
           ..register<SignInRequest>(SignInFailInteractor());
+        DummyRouter router = DummyRouter();
 
-        authenticationPresenter = AuthenticationPresenter(bus);
+        authenticationPresenter = AuthenticationPresenter(bus, router);
 
         expect(() => authenticationPresenter.signIn(
           'invalid@email.com',
@@ -53,8 +56,9 @@ main() {
       test('サインイン状態復帰に成功する', () async {
         InteractorBus bus = InteractorBus()
           ..register<RetrieveRequest>(RetrieveSuccessInteractor());
+        DummyRouter router = DummyRouter();
 
-        authenticationPresenter = AuthenticationPresenter(bus);
+        authenticationPresenter = AuthenticationPresenter(bus, router);
 
         await authenticationPresenter.retrieve();
 
@@ -67,8 +71,9 @@ main() {
       test('サインイン状態復帰に失敗する', () async {
         InteractorBus bus = InteractorBus()
           ..register<RetrieveRequest>(RetrieveFailInteractor());
+        DummyRouter router = DummyRouter();
 
-        authenticationPresenter = AuthenticationPresenter(bus);
+        authenticationPresenter = AuthenticationPresenter(bus, router);
 
         expect(
           () => authenticationPresenter.retrieve(),
@@ -81,8 +86,9 @@ main() {
       test('サインアウトに成功する', () async {
         InteractorBus bus = InteractorBus()
           ..register<SignOutRequest>(SignOutSuccessInteractor());
+        DummyRouter router = DummyRouter();
 
-        authenticationPresenter = AuthenticationPresenter(bus);
+        authenticationPresenter = AuthenticationPresenter(bus, router);
 
         await authenticationPresenter.signOut();
 
@@ -95,8 +101,9 @@ main() {
       test('サインアウトに失敗する', () async {
         InteractorBus bus = InteractorBus()
           ..register<SignOutRequest>(SignOutFailInteractor());
+        DummyRouter router = DummyRouter();
 
-        authenticationPresenter = AuthenticationPresenter(bus);
+        authenticationPresenter = AuthenticationPresenter(bus, router);
 
         expect(
           () => authenticationPresenter.signOut(),

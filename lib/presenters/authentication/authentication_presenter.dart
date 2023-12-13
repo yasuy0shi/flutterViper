@@ -1,3 +1,4 @@
+import 'package:flutterViper/routers/router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutterViper/entities/authentication/authentication.dart';
 import 'package:flutterViper/interactors/dto/authentication/retrieve_request.dart';
@@ -7,20 +8,25 @@ import 'package:flutterViper/interactors/dto/authentication/sign_in_response.dar
 import 'package:flutterViper/interactors/dto/authentication/sign_out_request.dart';
 import 'package:flutterViper/interactors/interactor_bus.dart';
 import 'package:flutterViper/utils/provider.dart';
+import 'package:flutterViper/routers/router_provider.dart';
 import 'package:flutterViper/utils/exceptions/exceptions.dart';
 
 class AuthenticationPresenterProvider {
   AuthenticationPresenterProvider._();
 
   static final presenter = StateNotifierProvider<AuthenticationPresenter, Authentication>((ref) {
-    return AuthenticationPresenter(ref.read(interactorBusProvider));
+    return AuthenticationPresenter(
+      ref.read(interactorBusProvider),
+      ref.read(myPageRouterProvider)
+    );
   });
 }
 
 class AuthenticationPresenter extends StateNotifier<Authentication> {
   final InteractorBus _bus;
+  final Router _myPageRouter;
 
-  AuthenticationPresenter(this._bus) : super(Authentication(user: null));
+  AuthenticationPresenter(this._bus, this._myPageRouter) : super(Authentication(user: null));
 
   /// サインインを行う
   ///
@@ -33,6 +39,10 @@ class AuthenticationPresenter extends StateNotifier<Authentication> {
       state = state.copyWith(
         user: response.user,
       );
+
+      if (state.isSignedIn) {
+        _myPageRouter.go();
+      }
     } catch (e) {
       throw DataHandlingException(message: 'サインインに失敗しました');
     }

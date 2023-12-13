@@ -20,32 +20,13 @@ void main() {
       );
 
       // ランディングページが表示されている
-      expect(find.text('VIPER TEST'), findsOneWidget);
+      expect(find.text('Flutter VIPER'), findsOneWidget);
       expect(find.byKey(const ValueKey('LandingPageTitle')), findsOneWidget);
       expect(find.byKey(const ValueKey('SignInButton')), findsOneWidget);
     });
 
     testWidgets('サインインボタンをタップしてサインインページに遷移する', (WidgetTester tester) async {
       expect(true, isTrue);
-      // final mockNavigatorObserver = MockNavigatorObserver();
-
-      // TestWidgetsFlutterBinding.ensureInitialized();
-
-      // await tester.pumpWidget(
-      //   ProviderScope(
-      //     child: MaterialApp(
-      //       home: const LandingPage(),
-      //       routes: {
-      //         '/sign_in': (BuildContext context) => const SizedBox(),
-      //       },
-      //     ),
-      //   ),
-      // );
-
-      // await tester.tap(find.byKey(const ValueKey('SignInButton')));
-
-      // // サインインページに遷移している
-      // verify(mockNavigatorObserver.didPush(any(), any())); // NOTE: NOT WORK
     });
   });
 }
